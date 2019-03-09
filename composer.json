@@ -1,0 +1,26 @@
+{
+	"name": "intellex/generator",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Ivan Sabo",
+			"email": "sabo@intellex.rs"
+		},
+		{
+			"name": "Aleksandar Stefanović",
+			"email": "sale@intellex.rs"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Intellex\\Generator\\": "src\\"
+		}
+	},
+	"require-dev": {
+		"intellex/debugger": "*"
+	},
+	"require": {
+		"intellex/pixabay": "*"
+	}
+
+}
