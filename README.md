@@ -88,7 +88,7 @@ HTML:
 * __HTMLArticleGen__ generates a complete HTML article.
 
 
-TO DO
+To do
 --------------------
 1. Testing of the results.
 2. Better implementation of the WeightedItemGen.
