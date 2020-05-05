@@ -2,7 +2,9 @@
 
 use Intellex\Generator\GeneratorInterface;
 use Intellex\Pixabay\Data\Image;
+use Intellex\Pixabay\Enum\Order;
 use Intellex\Pixabay\Enum\Category;
+use Intellex\Pixabay\Enum\ImageType;
 use Intellex\Pixabay\ImageAPI;
 use Intellex\Pixabay\SearchParams;
 
@@ -43,18 +45,22 @@ class PixabayImageURLGen implements GeneratorInterface {
 	 *
 	 * @param string       $apiKey API key for Pixabay.
 	 * @param int          $size   Max image width, in pixels. Possible values are SIZE_180,
-	 *                             SIZE_340, SIZE_640 or SIZE_960 (default).
+	 *                             SIZE_340, SIZE_640, SIZE_960 or null to get the largest
+	 *                             available from API (default).
 	 * @param SearchParams $params Search parameters for Pixabay API.
 	 */
-	public function __construct($apiKey, $params = null, $size = 960) {
+	public function __construct($apiKey, $params = null, $size = null) {
 		$this->apiKey = $apiKey;
 		$this->size = $size;
 
 		// Default search parameters for Pixabay API
 		try {
 			$this->params = (new SearchParams($params))
+				->setSafeSearch(true)
 				->setEditorsChoice(true)
+				->setImageType(ImageType::PHOTO)
 				->setCategory(Category::NATURE)
+				->setOrder(Order::POPULAR)
 				->setPerPage(200);
 		} catch (\Exception $ex) {
 		}
@@ -126,8 +132,9 @@ class PixabayImageURLGen implements GeneratorInterface {
 			case 640:
 				return $image->getURLForSize640();
 			case 960:
-			default:
 				return $image->getURLForSize960();
+			default:
+				return $image->getLargeImage();
 		}
 	}
 
